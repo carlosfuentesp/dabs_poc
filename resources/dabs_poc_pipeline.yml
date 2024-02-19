@@ -1,0 +1,14 @@
+# The main pipeline for dabs_poc
+resources:
+  pipelines:
+    dabs_poc_pipeline:
+      name: dabs_poc_pipeline
+      target: dabs_poc_${bundle.environment}
+      libraries:
+        - notebook:
+            path: ../src/dlt_pipeline.ipynb
+      clusters:
+        - label: "default"
+          num_workers: 2
+      configuration:
+        bundle.sourcePath: /Workspace/${workspace.file_path}/src
