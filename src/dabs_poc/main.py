@@ -1,5 +1,6 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.types import StructType, StructField, IntegerType, StringType, TimestampType, FloatType
+from pyspark.sql.types import StructType, StructField, IntegerType, StringType, FloatType
+from pyspark.sql.functions import to_timestamp
 
 
 def get_taxis():
@@ -7,8 +8,8 @@ def get_taxis():
 
   schema = StructType([
       StructField("trip_id", StringType(), True),
-      StructField("pickup_datetime", TimestampType(), True),
-      StructField("dropoff_datetime", TimestampType(), True),
+      StructField("pickup_datetime", StringType(), True),
+      StructField("dropoff_datetime", StringType(), True),
       StructField("passenger_count", IntegerType(), True),
       StructField("trip_distance", FloatType(), True),
       StructField("pickup_location", StringType(), True),
@@ -29,6 +30,10 @@ def get_taxis():
   ]
 
   df = spark.createDataFrame(data, schema=schema)
+
+  df = df.withColumn("pickup_datetime", to_timestamp("pickup_datetime", "yyyy-MM-dd HH:mm:ss"))
+  df = df.withColumn("dropoff_datetime", to_timestamp("dropoff_datetime", "yyyy-MM-dd HH:mm:ss"))
+
 
   return df
 
