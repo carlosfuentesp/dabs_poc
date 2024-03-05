@@ -17,13 +17,8 @@ def test_main():
 
 def test_tpep_pickup_datetime_not_null():
     taxis = main.get_taxis()
-    gedf = ge.dataset.SparkDFDataset(df)
+    gedf = ge.dataset.SparkDFDataset(taxis)
+    column_name = "tpep_pickup_datetime"
 
-    # Load the expectation suite (adjust the path and suite name as necessary)
-    suite = gedf.get_expectation_suite('your_expectation_suite_name.json')
-
-    # Validate the DataFrame against the expectation suite
-    results = gedf.validate(expectation_suite=suite)
-
-    # Ensure the test fails if Great Expectations finds any validation failures
-    assert results['success'] is True, "Data quality check failed for tpep_pickup_datetime column."
+    assert gedf.expect_column_values_to_not_be_null(column_name)['success'] == True, \
+            f"Column '{column_name}' contains null values"
