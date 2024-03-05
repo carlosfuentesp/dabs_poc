@@ -3,9 +3,6 @@ from pyspark.sql import SparkSession
 from dabs_poc import main
 import great_expectations as ge
 
-# Create a new Databricks Connect session. If this fails,
-# check that you have configured Databricks Connect correctly.
-# See https://docs.databricks.com/dev-tools/databricks-connect.html.
 
 SparkSession.builder = DatabricksSession.builder
 SparkSession.builder.getOrCreate()
