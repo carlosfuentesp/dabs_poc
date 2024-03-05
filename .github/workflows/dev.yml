@@ -34,11 +34,13 @@ jobs:
           pip install great-expectations pytest
 
       - name: Run tests
-        run: pytest src/test/main_test.py
+        run: pytest tests/main_test.py
 
   deploy:
     name: "Deploy bundle"
     runs-on: ubuntu-latest
+
+    needs: unit_tests
 
     steps:
       - uses: actions/checkout@v3
