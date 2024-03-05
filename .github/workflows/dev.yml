@@ -22,6 +22,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: databricks/setup-cli@main
 
       - name: Set up Python
         uses: actions/setup-python@v4
