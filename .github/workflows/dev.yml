@@ -16,9 +16,37 @@ on:
       - "**/*.py"
 
 jobs:
+  unit_tests:
+    name: "Run Unit Tests"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: databricks/setup-cli@main
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install great-expectations pytest databricks-connect
+
+      - name: Run tests
+        run: pytest tests/main_test.py
+        env:
+          DATABRICKS_HOST: https://adb-1796420516999624.4.azuredatabricks.net
+          DATABRICKS_CLUSTER_ID: job_cluster
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_BUNDLE_ENV: dev
+
   deploy:
     name: "Deploy bundle"
     runs-on: ubuntu-latest
+
+    needs: unit_tests
 
     steps:
       - uses: actions/checkout@v3
@@ -34,8 +62,7 @@ jobs:
     name: "Run pipeline update"
     runs-on: ubuntu-latest
 
-    needs:
-      - deploy
+    needs: [deploy, unit_tests]
 
     steps:
       - uses: actions/checkout@v3
