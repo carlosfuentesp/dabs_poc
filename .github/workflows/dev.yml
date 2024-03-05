@@ -38,6 +38,7 @@ jobs:
         run: pytest tests/main_test.py
         env:
           DATABRICKS_HOST: https://adb-1796420516999624.4.azuredatabricks.net
+          DATABRICKS_CLUSTER_ID: job_cluster
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           DATABRICKS_BUNDLE_ENV: dev
 
