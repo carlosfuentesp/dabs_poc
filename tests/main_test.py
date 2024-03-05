@@ -15,7 +15,7 @@ def test_main():
 def test_tpep_pickup_datetime_not_null():
     taxis = main.get_taxis()
     gedf = ge.dataset.SparkDFDataset(taxis)
-    column_name = "tpep_pickup_datetime"
+    column_name = "passenger_count"
 
     assert gedf.expect_column_values_to_not_be_null(column_name)['success'] == True, \
             f"Column '{column_name}' contains null values"
