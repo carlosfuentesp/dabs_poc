@@ -38,9 +38,10 @@ jobs:
         run: |
           echo "[DEFAULT]" > ~/.databrickscfg
           echo "host = https://adb-1796420516999624.4.azuredatabricks.net" >> ~/.databrickscfg
-          echo "token = $DATABRICKS_TOKEN" >> ~/.databrickscfg
+          echo "token = ${{ secrets.DATABRICKS_TOKEN }}" >> ~/.databrickscfg
         env:
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          DATABRICKS_BUNDLE_ENV: dev
 
       - name: Run tests
         run: pytest tests/main_test.py
