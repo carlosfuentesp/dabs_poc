@@ -15,8 +15,6 @@ import dabs_poc
 
 setup(
     name="dabs_poc",
-    # We use timestamp as Local version identifier (https://peps.python.org/pep-0440/#local-version-identifiers.)
-    # to ensure that changes to wheel package are picked up when used on all-purpose clusters
     version=dabs_poc.__version__ + "+" + datetime.datetime.utcnow().strftime("%Y%m%d.%H%M%S"),
     url="https://databricks.com",
     author="cfuentes@thoughtworks.com",
@@ -29,9 +27,6 @@ setup(
         ]
     },
     install_requires=[
-        # Dependencies in case the output wheel file is used as a library dependency.
-        # For defining dependencies, when this package is used in Databricks, see:
-        # https://docs.databricks.com/dev-tools/bundles/library-dependencies.html
         "setuptools"
     ],
 )
